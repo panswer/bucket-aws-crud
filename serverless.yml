@@ -1,0 +1,60 @@
+service: nodejs-crud
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+
+functions:
+  hello:
+    handler: src/handler.hello
+    events:
+      - httpApi:
+          path: /
+          method: get
+  
+  createBucket:
+    handler: src/createBucket.handler
+    events:
+      - httpApi:
+          path: /file
+          method: post
+  
+  getBucket:
+    handler: src/listFileBucket.handler
+    events:
+      - httpApi:
+          path: /bucket/{bucket}
+          method: get
+
+  listBuckets:
+    handler: src/listBucket.handler
+    events:
+      - httpApi:
+          path: /file
+          method: get
+
+  uploadFile:
+    handler: src/uploadFile.handler
+    events:
+      - httpApi:
+          path: /file
+          method: put
+
+  deleteBucket:
+    handler: src/deleteBucket.handler
+    events:
+      - httpApi:
+          path: /bucket
+          method: delete
+  
+  deleteFile:
+    handler: src/deleteFile.handler
+    events:
+      - httpApi:
+          path: /file/{bucket}
+          method: delete
+
+plugins:
+  - serverless-esbuild
+  - serverless-offline
