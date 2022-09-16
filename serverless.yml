@@ -55,6 +55,13 @@ functions:
           path: /file/{bucket}
           method: delete
 
+  getFile:
+    handler: src/getFile.handler
+    events:
+      - httpApi:
+          path: /file/{bucket}/{key}
+          method: get
+
 plugins:
   - serverless-esbuild
   - serverless-offline

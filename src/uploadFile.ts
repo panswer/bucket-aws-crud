@@ -49,7 +49,8 @@ const lambdaHandler = async (event: APIGatewayProxyEvent & RequestEvent): Promis
         let newFile = await s3.upload({
             Bucket: event.body.bucketName,
             Key: event.body.image.filename,
-            Body: event.body.image.content
+            Body: event.body.image.content,
+            ACL: 'public-read', // Acceso publico para solo descargar el archivo (https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#upload-property)
         }).promise();
 
         return {
